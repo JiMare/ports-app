@@ -36,6 +36,7 @@ h1 {
 .starter__image {
   width: 500px;
   border-radius: 20px;
+  display: block;
 }
 
 .starter__btn {
@@ -43,9 +44,57 @@ h1 {
   padding: 15px 20px;
   border: none;
   border-radius: 6px;
-  background-image: linear-gradient(to bottom, #8b00ff, #fca107 100%, white);
   font-size: 20px;
   font-weight: 700;
   color: #fff;
   cursor: pointer;
+  transition: 30s;
+}
+
+.gradient {
+  position: relative;
+  background: linear-gradient(to bottom, #8b00ff, #fca107 100%, white);
+  z-index: 1;
+}
+
+.gradient:disabled {
+  background: #161616;
+}
+
+.gradient::before {
+  position: absolute;
+  content: "";
+  inset: 0;
+  background: linear-gradient(to bottom, #fca107, #8b00ff 100%, white);
+  z-index: -1;
+  transition: opacity 1s linear;
+  opacity: 0;
+  border-radius: 6px;
+  border: none;
+}
+
+.gradient:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.card {
+  width: 200px;
+  height: 300px;
+  background-color: #161616;
+  border-radius: 20px;
+}
+
+.cards {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.arrow {
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  height: 200px;
 }
