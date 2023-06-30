@@ -1,0 +1,51 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #0e1012;
+  color: #fff;
+  font-family: "Ubuntu", sans-serif;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 38px;
+  text-align: center;
+  margin: 20px auto 30px;
+}
+
+.starter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.starter__image {
+  width: 500px;
+  border-radius: 20px;
+}
+
+.starter__btn {
+  margin-top: 20px;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 6px;
+  background-image: linear-gradient(to bottom, #8b00ff, #fca107 100%, white);
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+}
