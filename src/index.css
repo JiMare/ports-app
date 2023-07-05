@@ -204,7 +204,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 80px;
+  margin-top: 20px;
 }
 
 .game__card {
@@ -215,6 +215,7 @@ h1 {
 
 .game__port {
   width: 200px;
+  min-width: 200px;
   height: 160px;
   background-color: #161616;
   border-radius: 20px;
@@ -229,4 +230,87 @@ h1 {
   gap: 10px;
   margin-top: 20px;
   cursor: pointer;
+  width: 80vw;
+  overflow-x: auto;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff26;
+  border-radius: 20px;
+  margin-top: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}
+
+.progress {
+  height: 30px;
+  width: 80vw;
+  background-color: #ffffff26;
+  backdrop-filter: blur(25px);
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-inline: 5px;
+  margin-bottom: 20px;
+}
+
+.progress__bar {
+  height: 20px;
+  border-radius: 20px;
+}
+
+.success {
+  background-color: aqua;
+}
+
+.error {
+  background-color: #b700ff;
+}
+
+.progreess__label {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+.progress-bars {
+  margin-inline: auto;
+  margin-bottom: 10px;
+}
+
+.countdown {
+  border: 1px solid #fff;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 800px) {
+  .progress {
+    width: 350px;
+  }
+
+  .progress-bars {
+    display: flex;
+    width: 80vw;
+    gap: 20px;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 1300px) {
+  .game__ports {
+    width: auto;
+  }
 }
