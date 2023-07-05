@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from "react";
 import { Port } from "../api/apiTypes";
 import { QuestionMark } from "./QuestionMark";
-import { VisibilityState } from "../App";
+import { VisibilityState } from "../pages/Overview";
 
 type State = {
   port: boolean;

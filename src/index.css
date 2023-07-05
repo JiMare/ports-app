@@ -196,3 +196,37 @@ h1 {
     flex-direction: row;
   }
 }
+
+/* GAME PAGE */
+
+.game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+}
+
+.game__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.game__port {
+  width: 200px;
+  height: 160px;
+  background-color: #161616;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game__ports {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  cursor: pointer;
+}
