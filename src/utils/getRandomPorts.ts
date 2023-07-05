@@ -1,29 +1,16 @@
-const generateUniqueNumbers = (startNumber: number) => {
-  const numbers = [startNumber];
-
-  while (numbers.length < 5) {
-    const randomNum = Math.floor(Math.random() * 28);
-
-    if (!numbers.includes(randomNum)) {
-      numbers.push(randomNum);
-    }
-  }
-
-  for (let i = numbers.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
-  }
-
-  return numbers;
+const insertRandomly = (arr: number[], element: number): number[] => {
+  const randomIndex = Math.floor(Math.random() * (arr.length + 1));
+  arr.splice(randomIndex, 0, element);
+  return arr;
 };
 
-export const getRandomPorts = (id: number) => {
-  const portsArr = [id];
-  while (portsArr.length < 5) {
+export const getRandomPorts = (id: number): number[] => {
+  const portsArr: number[] = [];
+  while (portsArr.length < 4) {
     const randomId = Math.floor(Math.random() * 27) + 1;
-    if (!portsArr.includes(randomId)) {
+    if (!portsArr.includes(randomId) && randomId !== id) {
       portsArr.push(randomId);
     }
   }
-  return portsArr;
+  return insertRandomly(portsArr, id);
 };
