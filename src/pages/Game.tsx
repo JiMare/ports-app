@@ -20,6 +20,8 @@ export const Game: React.FC = () => {
   const [progress, setProgress] = useState(0);
   const [errors, setErrors] = useState(0);
 
+  const [endGame, setEndGame] = useState(false);
+
   useEffect(() => {
     getPortsData().then((response) => {
       if (response) {
@@ -31,8 +33,15 @@ export const Game: React.FC = () => {
   useEffect(() => {
     if (portsData.length > 0) {
       setCard(getCardToGuess(portsData));
+    } else if (portsData.length === 0 && (errors !== 0 || progress !== 0)) {
+      setEndGame(true);
     }
-  }, [portsData]);
+    if (errors === 3) setEndGame(true);
+  }, [portsData, errors, progress]);
+
+  useEffect(() => {
+    if (endGame) console.log("end game");
+  }, [endGame]);
 
   const onNextStep = (id: number) => {
     if (id === card?.id) {
@@ -49,7 +58,7 @@ export const Game: React.FC = () => {
         <ProgressBar progress={progress * (100 / 27)} label="Success" />
         <ProgressBar progress={errors * (100 / 3)} label="Error" />
       </div>
-      <CountDown />
+      <CountDown onEnd={() => setEndGame(true)} />
       {card && (
         <>
           <GameCard name={card.name} />

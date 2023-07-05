@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-export const CountDown: React.FC = () => {
+type Props = {
+  onEnd: () => void;
+};
+
+export const CountDown: React.FC<Props> = ({ onEnd }) => {
   const [seconds, setSeconds] = useState(120);
 
   useEffect(() => {
@@ -9,6 +13,10 @@ export const CountDown: React.FC = () => {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (seconds === 0) onEnd();
+  }, [seconds, onEnd]);
 
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
