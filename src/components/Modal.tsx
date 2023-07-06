@@ -23,16 +23,21 @@ const ModalOverlay: React.FC<OverlayProps> = ({ children }) => {
 
 type ModalProps = BackdropProps & OverlayProps;
 
-const portalElement = document.getElementById("overlays")!;
+const portalElement = document.getElementById("overlays");
 
 export const Modal: React.FC<ModalProps> = ({ children, onConfirm }) => {
   return (
     <>
-      {ReactDOM.createPortal(<Backdrop onConfirm={onConfirm} />, portalElement)}
-      {ReactDOM.createPortal(
-        <ModalOverlay>{children}</ModalOverlay>,
-        portalElement
-      )}
+      {portalElement &&
+        ReactDOM.createPortal(
+          <Backdrop onConfirm={onConfirm} />,
+          portalElement
+        )}
+      {portalElement &&
+        ReactDOM.createPortal(
+          <ModalOverlay>{children}</ModalOverlay>,
+          portalElement
+        )}
       <ModalOverlay>{children}</ModalOverlay>
     </>
   );

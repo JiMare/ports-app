@@ -137,7 +137,7 @@ h1 {
   cursor: pointer;
 }
 
-.question {
+.gradient__text {
   color: transparent;
   background-image: linear-gradient(to bottom, #fca107, #8b00ff 100%, white);
   background-clip: text;
@@ -283,7 +283,7 @@ h1 {
   color: #b700ff;
 }
 
-.progreess__label {
+.progress__label {
   margin-left: 5px;
   margin-bottom: 5px;
 }
@@ -369,6 +369,7 @@ h1 {
 
 .modal__content {
   min-height: 180px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -377,8 +378,8 @@ h1 {
 
 @media (min-width: 768px) {
   .modal {
-    width: 40rem;
-    left: calc(50% - 20rem);
+    width: 30rem;
+    left: calc(50% - 15rem);
   }
 }
 
@@ -391,4 +392,29 @@ h1 {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* END GAME MODAL*/
+
+.btns {
+  display: flex;
+  gap: 10px;
+  width: 80%;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.error__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid #b700ff;
+  border-radius: 20px;
+}
+
+.points {
+  font-size: 30px;
 }

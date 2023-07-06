@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Port } from "../api/apiTypes";
 import { GameCard } from "../components/GameCard";
 import { getCardToGuess } from "../utils/getCardToGuess";
@@ -8,7 +8,8 @@ import { getRandomPorts } from "../utils/getRandomPorts";
 import { ProgressBar } from "../components/ProgressBar";
 import { CountDown } from "../components/CountDown";
 import { useNavigate } from "react-router-dom";
-import { Modal } from "../components/Modal";
+import { ErrorModal } from "../components/modals/ErrorModal";
+import { EndGameModal } from "../components/modals/EndGameModal";
 
 export type PortCardType = {
   id: number;
@@ -28,6 +29,7 @@ export const Game: React.FC = () => {
   const [errors, setErrors] = useState(0);
 
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showEndGameModal, setShowEndGameModal] = useState(false);
 
   const [endGame, setEndGame] = useState(false);
 
@@ -40,7 +42,7 @@ export const Game: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (portsData.length > 0 && !showErrorModal) {
+    if (portsData.length > 0 && !showErrorModal && errors !== 3) {
       setCard(getCardToGuess(portsData));
     } else if (portsData.length === 0 && (errors !== 0 || progress !== 0)) {
       setEndGame(true);
@@ -48,7 +50,7 @@ export const Game: React.FC = () => {
     if (errors === 3) setEndGame(true);
   }, [portsData, errors, progress, showErrorModal]);
 
-  useEffect(() => {
+  const points = useMemo(() => {
     const getPoints = (rest: number) => {
       if (errors === 3) {
         return progress;
@@ -56,8 +58,14 @@ export const Game: React.FC = () => {
         return Math.ceil(rest / 10) + progress;
       }
     };
-    if (endGame) console.log("end game modal", restTime, getPoints(restTime));
-  }, [endGame, restTime, errors, progress]);
+    return getPoints(restTime);
+  }, [restTime, errors, progress]);
+
+  useEffect(() => {
+    if (endGame) {
+      setShowEndGameModal(true);
+    }
+  }, [endGame]);
 
   useEffect(() => {
     if (card) {
@@ -71,7 +79,9 @@ export const Game: React.FC = () => {
       setPortsData((prev) => [...prev.filter((port) => port.id !== card?.id)]);
     } else {
       setErrors((prev) => prev + 1);
-      setShowErrorModal(true);
+      if (errors !== 2) {
+        setShowErrorModal(true);
+      }
     }
   };
 
@@ -82,6 +92,10 @@ export const Game: React.FC = () => {
 
   const onRestTime = (time: number) => {
     setRestTime(time);
+  };
+
+  const onRestartGame = () => {
+    window.location.reload();
   };
 
   return (
@@ -113,15 +127,14 @@ export const Game: React.FC = () => {
           Back to learn
         </button>
       </div>
-      {showErrorModal && (
-        <Modal onConfirm={onBackToGame}>
-          <h3 className="error__text">No!</h3>
-          <h2>Right answer was:</h2>
-          <h2>{card?.numbers.join(", ")}</h2>
-          <button className="back__btn gradient" onClick={onBackToGame}>
-            Back to game
-          </button>
-        </Modal>
+      {showErrorModal && <ErrorModal onConfirm={onBackToGame} card={card} />}
+      {showEndGameModal && (
+        <EndGameModal
+          onConfirm={onRestartGame}
+          points={points}
+          card={card}
+          error={errors === 3}
+        />
       )}
     </>
   );
