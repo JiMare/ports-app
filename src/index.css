@@ -223,6 +223,12 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.5s ease;
+}
+
+.game__port:hover {
+  transform: scale(0.8);
+  font-size: 21px;
 }
 
 .game__ports {
