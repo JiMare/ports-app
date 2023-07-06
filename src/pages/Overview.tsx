@@ -59,8 +59,10 @@ export const Overview: React.FC = () => {
         setNumOfCardsToShow(1);
       } else if (isMediumDevice) {
         setNumOfCardsToShow(2);
+        setLastCardVisible(1);
       } else {
         setNumOfCardsToShow(4);
+        setLastCardVisible(3);
       }
     };
     window.addEventListener("resize", onResize);
