@@ -2,21 +2,29 @@ import React, { useState, useEffect } from "react";
 
 type Props = {
   onEnd: () => void;
+  endGame: boolean;
+  onRestTime: (time: number) => void;
 };
 
-export const CountDown: React.FC<Props> = ({ onEnd }) => {
+export const CountDown: React.FC<Props> = ({ onEnd, endGame, onRestTime }) => {
   const [seconds, setSeconds] = useState(120);
 
   useEffect(() => {
+    if (seconds === 0) {
+      onEnd();
+    }
+    if (endGame) {
+      onRestTime(seconds);
+    }
     const interval = setInterval(() => {
-      setSeconds((seconds) => seconds - 1);
+      if (endGame) {
+        clearInterval(interval);
+      } else {
+        setSeconds((seconds) => (seconds > 0 ? seconds - 1 : 0));
+      }
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (seconds === 0) onEnd();
-  }, [seconds, onEnd]);
+  }, [seconds, onEnd, endGame, onRestTime]);
 
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;

@@ -296,6 +296,21 @@ h1 {
   margin-bottom: 20px;
 }
 
+.back__btn {
+  padding: 10px 15px;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+}
+
+.back {
+  position: absolute;
+  left: 10%;
+  bottom: 40px;
+}
+
 @media (min-width: 800px) {
   .progress {
     width: 350px;
