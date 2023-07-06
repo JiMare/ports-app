@@ -137,7 +137,7 @@ h1 {
   cursor: pointer;
 }
 
-.question {
+.gradient__text {
   color: transparent;
   background-image: linear-gradient(to bottom, #fca107, #8b00ff 100%, white);
   background-clip: text;
@@ -195,4 +195,226 @@ h1 {
   .toggle {
     flex-direction: row;
   }
+}
+
+/* GAME PAGE */
+
+.game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.game__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.game__port {
+  width: 200px;
+  min-width: 200px;
+  height: 160px;
+  background-color: #161616;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game__ports {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  cursor: pointer;
+  width: 80vw;
+  overflow-x: auto;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff26;
+  border-radius: 20px;
+  margin-top: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}
+
+.progress {
+  height: 30px;
+  width: 80vw;
+  background-color: #ffffff26;
+  backdrop-filter: blur(25px);
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-inline: 5px;
+  margin-bottom: 20px;
+}
+
+.progress__bar {
+  height: 20px;
+  border-radius: 20px;
+}
+
+.success {
+  background-color: aqua;
+}
+
+.success__text {
+  color: aqua;
+}
+
+.error {
+  background-color: #b700ff;
+}
+
+.error__text {
+  color: #b700ff;
+}
+
+.progress__label {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+.progress-bars {
+  margin-inline: auto;
+  margin-bottom: 10px;
+}
+
+.countdown {
+  border: 1px solid #fff;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.back__btn {
+  padding: 10px 15px;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+}
+
+.back {
+  align-self: flex-start;
+  margin-top: 40px;
+  margin-left: calc(20vw / 2 - 20px);
+}
+
+@media (min-width: 800px) {
+  .progress {
+    width: 350px;
+  }
+
+  .progress-bars {
+    display: flex;
+    width: 80vw;
+    gap: 20px;
+    justify-content: space-between;
+  }
+
+  .back {
+    margin-left: calc(20vw / 2 - 10px);
+  }
+}
+
+@media (min-width: 1300px) {
+  .game__ports {
+    width: auto;
+  }
+}
+
+/* MODAL */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  position: fixed;
+  top: 40vh;
+  left: 5%;
+  width: 90%;
+  background-color: #161616;
+  padding: 1rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 30;
+  animation: slide-down 300ms ease-out forwards;
+}
+
+.modal__content {
+  min-height: 180px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    width: 30rem;
+    left: calc(50% - 15rem);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* END GAME MODAL*/
+
+.btns {
+  display: flex;
+  gap: 10px;
+  width: 80%;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.error__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid #b700ff;
+  border-radius: 20px;
+}
+
+.points {
+  font-size: 30px;
 }
