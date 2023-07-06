@@ -7,6 +7,7 @@ import { PortCard } from "../components/PortCard";
 import { getRandomPorts } from "../utils/getRandomPorts";
 import { ProgressBar } from "../components/ProgressBar";
 import { CountDown } from "../components/CountDown";
+import { useNavigate } from "react-router-dom";
 
 export type PortCardType = {
   id: number;
@@ -14,8 +15,12 @@ export type PortCardType = {
 };
 
 export const Game: React.FC = () => {
+  const navigate = useNavigate();
+
   const [portsData, setPortsData] = useState<Port[]>([]);
   const [card, setCard] = useState<Port | null>(null);
+
+  const [restTime, setRestTime] = useState(0);
 
   const [progress, setProgress] = useState(0);
   const [errors, setErrors] = useState(0);
@@ -40,8 +45,15 @@ export const Game: React.FC = () => {
   }, [portsData, errors, progress]);
 
   useEffect(() => {
-    if (endGame) console.log("end game");
-  }, [endGame]);
+    const getPoints = (rest: number) => {
+      if (errors === 3) {
+        return progress;
+      } else {
+        return Math.ceil(rest / 10) + progress;
+      }
+    };
+    if (endGame) console.log("end game modal", restTime, getPoints(restTime));
+  }, [endGame, restTime, errors, progress]);
 
   const onNextStep = (id: number) => {
     if (id === card?.id) {
@@ -52,13 +64,21 @@ export const Game: React.FC = () => {
     setPortsData((prev) => [...prev.filter((port) => port.id !== card?.id)]);
   };
 
+  const onRestTime = (time: number) => {
+    setRestTime(time);
+  };
+
   return (
     <div className="game">
       <div className="progress-bars">
         <ProgressBar progress={progress * (100 / 27)} label="Success" />
         <ProgressBar progress={errors * (100 / 3)} label="Error" />
       </div>
-      <CountDown onEnd={() => setEndGame(true)} />
+      <CountDown
+        onEnd={() => setEndGame(true)}
+        endGame={endGame}
+        onRestTime={onRestTime}
+      />
       {card && (
         <>
           <GameCard name={card.name} />
@@ -69,6 +89,9 @@ export const Game: React.FC = () => {
           </div>
         </>
       )}
+      <button className="back__btn gradient back" onClick={() => navigate("/")}>
+        Back to learn
+      </button>
     </div>
   );
 };
