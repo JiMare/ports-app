@@ -314,9 +314,9 @@ h1 {
 }
 
 .back {
-  position: absolute;
-  left: 10%;
-  bottom: 40px;
+  align-self: flex-start;
+  margin-top: 40px;
+  margin-left: calc(20vw / 2 - 20px);
 }
 
 @media (min-width: 800px) {
@@ -329,6 +329,10 @@ h1 {
     width: 80vw;
     gap: 20px;
     justify-content: space-between;
+  }
+
+  .back {
+    margin-left: calc(20vw / 2 - 10px);
   }
 }
 
