@@ -41,20 +41,18 @@ export const Card: React.FC<Props> = ({ port, visibility }) => {
   });
 
   useEffect(() => {
-    if (!visibility.names) {
-      dispatch({ type: "hideName" });
-    }
     if (visibility.names) {
       dispatch({ type: "showName" });
+    } else {
+      dispatch({ type: "hideName" });
     }
   }, [visibility.names]);
 
   useEffect(() => {
-    if (!visibility.ports) {
-      dispatch({ type: "hidePort" });
-    }
     if (visibility.ports) {
       dispatch({ type: "showPort" });
+    } else {
+      dispatch({ type: "hidePort" });
     }
   }, [visibility.ports]);
 

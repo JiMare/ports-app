@@ -157,6 +157,7 @@ h1 {
   border: none;
   cursor: pointer;
   height: 200px;
+  font-size: 20px;
 }
 
 .toggle {
@@ -175,11 +176,12 @@ h1 {
   color: #8b00ff;
   font-weight: 700;
   cursor: pointer;
-  transition: color 0.5s;
+  transition: all 0.5s ease;
   width: 150px;
 }
 
 .toggle__btn:hover {
+  background-color: #8b00ff;
   color: #fca107;
 }
 
@@ -194,6 +196,11 @@ h1 {
 
   .toggle {
     flex-direction: row;
+  }
+
+  .arrow {
+    padding-inline: 4px;
+    font-size: 25px;
   }
 }
 
