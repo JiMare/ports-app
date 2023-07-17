@@ -5,6 +5,12 @@ import { Port } from "../api/apiTypes";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import useMediaQuery from "../hook/useMediaQuery";
 import { getPortsData } from "../api/db";
+import { StartGameModal } from "../components/modals/StartGameModal";
+
+export enum Games {
+  PORTS = "ports",
+  PROTOCOLS = "protocols",
+}
 
 export type VisibilityState = {
   ports: boolean;
@@ -33,6 +39,8 @@ export const Overview: React.FC = () => {
 
   const [portsData, setPortsData] = useState<Port[]>([]);
 
+  const [isStartGameModalOpen, setIsStartGameModalOpen] = useState(false);
+
   useEffect(() => {
     getPortsData().then((response) => response && setPortsData(response));
   }, []);
@@ -51,6 +59,11 @@ export const Overview: React.FC = () => {
 
   const getCarouselCards = (data: Port[], index: number) => {
     return data.slice(index - numOfCardsToShow + 1, index + 1);
+  };
+
+  const onStartGame = (game: Games) => {
+    localStorage.setItem("gameType", game);
+    navigate("/game");
   };
 
   useEffect(() => {
@@ -72,53 +85,62 @@ export const Overview: React.FC = () => {
   }, [isMobile, isMediumDevice]);
 
   return (
-    <div>
-      <h1>Learn 27 ports with our Ports App</h1>
-      <div className="starter">
-        <img src="ports.png" alt="ports" className="starter__image" />
-        <button
-          className="starter__btn gradient"
-          onClick={() => navigate("/game")}
-        >
-          Get started
-        </button>
-      </div>
-      {portsData && portsData.length > 0 && (
-        <div className="cards">
+    <>
+      <div>
+        <h1>Learn 27 ports with our Ports App</h1>
+        <div className="starter">
+          <img src="ports.png" alt="ports" className="starter__image" />
           <button
-            className="arrow gradient"
-            onClick={() => setLastCardVisible((prev) => prev - 1)}
-            disabled={lastCardVisible - numOfCardsToShow < 0}
+            className="primary__btn gradient"
+            //onClick={() => navigate("/game")}
+            onClick={() => setIsStartGameModalOpen(true)}
           >
-            <FaAngleLeft />
-          </button>
-          {getCarouselCards(portsData, lastCardVisible).map((port) => (
-            <Card key={port.id} port={port} visibility={visibility} />
-          ))}
-          <button
-            className="arrow gradient"
-            onClick={() => setLastCardVisible((prev) => prev + 1)}
-            disabled={lastCardVisible + 1 === portsData.length}
-          >
-            <FaAngleRight />
+            Get started
           </button>
         </div>
-      )}
-      <div className="toggle">
-        <button
-          className="toggle__btn"
-          onClick={() => dispatch({ type: "toggleNames" })}
-        >
-          Toggle all names
-        </button>
+        {portsData && portsData.length > 0 && (
+          <div className="cards">
+            <button
+              className="arrow gradient"
+              onClick={() => setLastCardVisible((prev) => prev - 1)}
+              disabled={lastCardVisible - numOfCardsToShow < 0}
+            >
+              <FaAngleLeft />
+            </button>
+            {getCarouselCards(portsData, lastCardVisible).map((port) => (
+              <Card key={port.id} port={port} visibility={visibility} />
+            ))}
+            <button
+              className="arrow gradient"
+              onClick={() => setLastCardVisible((prev) => prev + 1)}
+              disabled={lastCardVisible + 1 === portsData.length}
+            >
+              <FaAngleRight />
+            </button>
+          </div>
+        )}
+        <div className="toggle">
+          <button
+            className="toggle__btn"
+            onClick={() => dispatch({ type: "toggleNames" })}
+          >
+            Toggle all names
+          </button>
 
-        <button
-          className="toggle__btn"
-          onClick={() => dispatch({ type: "togglePorts" })}
-        >
-          Toggle all ports
-        </button>
+          <button
+            className="toggle__btn"
+            onClick={() => dispatch({ type: "togglePorts" })}
+          >
+            Toggle all ports
+          </button>
+        </div>
       </div>
-    </div>
+      {isStartGameModalOpen && (
+        <StartGameModal
+          onClose={() => setIsStartGameModalOpen(false)}
+          onStartGame={onStartGame}
+        />
+      )}
+    </>
   );
 };

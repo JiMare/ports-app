@@ -4,13 +4,13 @@ const insertRandomly = (arr: number[], element: number): number[] => {
   return arr;
 };
 
-export const getRandomPorts = (id: number): number[] => {
-  const portsArr: number[] = [];
-  while (portsArr.length < 4) {
+export const getRandomCards = (id: number): number[] => {
+  const cardsArr: number[] = [];
+  while (cardsArr.length < 4) {
     const randomId = Math.floor(Math.random() * 27) + 1;
-    if (!portsArr.includes(randomId) && randomId !== id) {
-      portsArr.push(randomId);
+    if (!cardsArr.includes(randomId) && randomId !== id) {
+      cardsArr.push(randomId);
     }
   }
-  return insertRandomly(portsArr, id);
+  return insertRandomly(cardsArr, id);
 };

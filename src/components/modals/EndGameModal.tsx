@@ -2,12 +2,14 @@ import React from "react";
 import { Modal } from "../Modal";
 import { useNavigate } from "react-router-dom";
 import { Port } from "../../api/apiTypes";
+import { Games } from "../../pages/Overview";
 
 type Props = {
   onConfirm: () => void;
   points: number;
   card: Port | null;
   error: boolean;
+  typeOfGame: Games;
 };
 
 export const EndGameModal: React.FC<Props> = ({
@@ -15,6 +17,7 @@ export const EndGameModal: React.FC<Props> = ({
   points,
   card,
   error,
+  typeOfGame,
 }) => {
   const navigate = useNavigate();
   return (
@@ -23,7 +26,9 @@ export const EndGameModal: React.FC<Props> = ({
         <div className="error__content">
           <h3 className="error__text">No!</h3>
           <h2>Right answer was:</h2>
-          <h2>{card?.numbers.join(", ")}</h2>
+          <h2>
+            {typeOfGame === Games.PORTS ? card?.numbers.join(", ") : card?.name}
+          </h2>
         </div>
       )}
       <h2>End Game</h2>

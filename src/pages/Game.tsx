@@ -3,13 +3,14 @@ import { Port } from "../api/apiTypes";
 import { GameCard } from "../components/GameCard";
 import { getCardToGuess } from "../utils/getCardToGuess";
 import { getPortsData } from "../api/db";
-import { PortCard } from "../components/PortCard";
-import { getRandomPorts } from "../utils/getRandomPorts";
+import { GuessCard } from "../components/GuessCard";
+import { getRandomCards } from "../utils/getRandomCards";
 import { ProgressBar } from "../components/ProgressBar";
 import { CountDown } from "../components/CountDown";
 import { useNavigate } from "react-router-dom";
 import { ErrorModal } from "../components/modals/ErrorModal";
 import { EndGameModal } from "../components/modals/EndGameModal";
+import { Games } from "./Overview";
 
 export type PortCardType = {
   id: number;
@@ -19,9 +20,11 @@ export type PortCardType = {
 export const Game: React.FC = () => {
   const navigate = useNavigate();
 
+  const typeOfGame = (localStorage.getItem("gameType") as Games) ?? Games.PORTS;
+
   const [portsData, setPortsData] = useState<Port[]>([]);
   const [card, setCard] = useState<Port | null>(null);
-  const [randomPorts, setRandomPorts] = useState<number[]>([]);
+  const [randomCards, setRandomCards] = useState<number[]>([]);
 
   const [restTime, setRestTime] = useState(120);
 
@@ -69,7 +72,7 @@ export const Game: React.FC = () => {
 
   useEffect(() => {
     if (card) {
-      setRandomPorts(getRandomPorts(card.id));
+      setRandomCards(getRandomCards(card.id));
     }
   }, [card]);
 
@@ -112,10 +115,19 @@ export const Game: React.FC = () => {
         />
         {card && (
           <>
-            <GameCard name={card.name} />
-            <div className="game__ports">
-              {randomPorts.map((id) => (
-                <PortCard key={id} id={id} onClick={onNextStep} />
+            <GameCard
+              guess={
+                typeOfGame === Games.PORTS ? card.name : card.numbers.join(", ")
+              }
+            />
+            <div className="game__cards">
+              {randomCards.map((id) => (
+                <GuessCard
+                  key={id}
+                  id={id}
+                  onClick={onNextStep}
+                  typeOfGame={typeOfGame}
+                />
               ))}
             </div>
           </>
@@ -127,13 +139,20 @@ export const Game: React.FC = () => {
           Back to learn
         </button>
       </div>
-      {showErrorModal && <ErrorModal onConfirm={onBackToGame} card={card} />}
+      {showErrorModal && (
+        <ErrorModal
+          onConfirm={onBackToGame}
+          card={card}
+          typeOfGame={typeOfGame}
+        />
+      )}
       {showEndGameModal && (
         <EndGameModal
           onConfirm={onRestartGame}
           points={points}
           card={card}
           error={errors === 3}
+          typeOfGame={typeOfGame}
         />
       )}
     </>
